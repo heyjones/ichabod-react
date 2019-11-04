@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+import TemplateIndex from './templates/TemplateIndex.js';
 import Title from './components/Title';
 import Date from './components/Date';
 import Excerpt from './components/Excerpt';
 import Content from './components/Content';
 
+const fs = require('fs')
+
 class Template extends Component {
 
-  state = {
-    query: []
+  constructor(props) {
+      super(props);
+      this.state = {
+        query: [],
+      }
   }
 
   componentDidMount() {
@@ -28,13 +34,29 @@ class Template extends Component {
         [embed]
       </div>
     }else if(this.state.query.is_404){
-      return <div>
-        [404]
-      </div>
+      const path = './templates/404.js';
+      try{
+        if(fs.existsSync(path)){
+          return <div>
+            [404 exists]
+          </div>
+        }
+      }catch(err){
+        return <div>
+          [404 doesn't exist]
+        </div>
+      }
+      fs.access(path, fs.F_OK, (err) => {
+        if(err){
+          console.error(err);
+          return;
+        }
+        return <div>
+          [404]
+        </div>
+      })
     }else if(this.state.query.is_search){
-      return <div>
-        [search]
-      </div>
+      return <TemplateIndex title="Search" excerpt="This is the thing." posts={this.state.query.posts} />
     }else if(this.state.query.is_front_page){
       return <div>
         [front_page]

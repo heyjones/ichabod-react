@@ -11,7 +11,7 @@ class Date extends Component {
 
     render() {
         return(
-            <span class="date">
+            <span className="date">
                 {this.props.date}
             </span>
         );
