@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Title from './components/Title';
+import Date from './components/Date';
+import Excerpt from './components/Excerpt';
+import Content from './components/Content';
 
 class Template extends Component {
 
@@ -37,10 +41,12 @@ class Template extends Component {
       </div>
     }else if(this.state.query.is_home){
       this.posts = this.state.query.posts.map((post, key) =>
-        <li key={post.ID}>
+        <li key={post.id}>
           <a href={post.permalink}>
-            {post.post_title}
+            <Title title={post.title} />
           </a>
+          <Date date={post.date} />
+          <Excerpt excerpt={post.excerpt} />
         </li>
       );
       return <div>
@@ -69,12 +75,10 @@ class Template extends Component {
       </div>
     }else if(this.state.query.is_single){
       return <div>
-        <h1>
-          {this.state.query.post.post_title}
-        </h1>
-        <p>
-          {this.state.query.post.post_content}
-        </p>
+        <Title title={this.state.query.post.title} />
+        <Date date={this.state.query.post.date} />
+        <Excerpt excerpt={this.state.query.post.excerpt} />
+        <Content content={this.state.query.post.content} />
       </div>
     }else if(this.state.query.is_page){
       return <div>
