@@ -1,19 +1,23 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 class Content extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            content: null,
+            content: props.content,
         }
+    }
+
+    content(){
+        return {
+            __html: this.state.content
+        };
     }
 
     render() {
         return(
-            <Fragment>
-                {this.props.content}
-            </Fragment>
+           <div className="content" dangerouslySetInnerHTML={this.content()} />
         );
     }
 
